@@ -1,0 +1,53 @@
+import org.joda.time.DateTime
+var String TAG = "Alarm"
+
+rule "Alarm"
+when
+	Item alarm changed
+then
+	if(alarm.state == ON){
+		logInfo(TAG, "Enabling alarm ");
+		//executeCommandLine("/opt/picotts/tts \"Alarme activée\" | aplay --rate=16000 --channels=1 --format=S16_LE");
+		//executeCommandLine("/home/pi/speech.sh Alarme activée");
+		//pushover("Alarme déclenchée à :" + new DateTime());
+	}else{
+		logInfo(TAG,"Disabling alarm");
+		//executeCommandLine("/opt/picotts/tts \"Alarme désactivée\" | aplay --rate=16000 --channels=1 --format=S16_LE");
+		//executeCommandLine("/home/pi/speech.sh Alarme désactivée");
+	}
+	if(alarm.state == OFF && siren.state == ON) {
+		logInfo(TAG, "Stop alarm");
+		sendCommand(siren,OFF);
+	}
+end
+
+rule "Temper"
+when
+	Item motion_1_alarm changed
+then
+	if(motion_1_alarm.state == ON){
+		createTimer(now.plusSeconds(10)) [|
+			motion_1_alarm.state = OFF
+		]
+	}
+end
+
+rule "Siren"
+when
+	Item contact_entry_door changed or
+	Item motion_1_alarm changed or
+	Item motion_1_detect changed
+then
+  if (  alarm.state == ON &&
+			(	contact_entry_door.state == OPEN ||
+				motion_1_alarm.state == ON ||
+				motion_1_detect.state == ON
+			)) {
+  	logWarn(TAG, "Alarm triggered !!!")
+    sendCommand(siren,ON);
+// pushover("Alarme déclenchée à :" + new DateTime());
+// while(alarm.state == ON)
+// executeCommandLine("/opt/picotts/tts \"Vous entrez dans un appartement protégé. Un service de sécurité a été prévenu, ainsi que le propriétaire et les voisins.\" | aplay --rate=16000 --channels=1 --format=S16_LE");
+// executeCommandLine("/home/pi/speech.sh \"Vous entrez dans un appartement protégé. Un service de sécurité a été prévenu, ainsi que le propriétaire et les voisins.\"");
+  }
+end

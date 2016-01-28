@@ -1,0 +1,23 @@
+Group gItem
+Group gSecurity
+Group gCommand
+Group gEnergy
+Group gBattery
+Group gTemp
+Group gLum
+Group gZwave
+
+// Contact
+Contact contact_entry_door      "Porte d'entrée [MAP(en.map):%s]"   <contact> (gItem,gZwave,gSecurity)          {zwave="2:command=alarm,respond_to_basic=true"}
+Number  batt_contact_entry_door "Batterie porte d'entrée : [%d %%]" <battery> (gItem,gZwave,gSecurity,gBattery) {zwave="2:command=battery"}
+
+// Wall plug
+Switch wall_plug           "Wall Plug"              <socket>  (gItem,gZwave)          { zwave="3:command=switch_binary"}
+Number wall_plug_energy    "Consommation [%.1f W]"  <socket>  (gItem,gZwave,gEnergy)  { zwave="3:command=meter" }
+
+// Motion sensor
+Switch motion_1_detect  "Movement: [%s]"            <present>     (gItem,gZwave,gSecurity) { zwave="4:command=sensor_binary" }
+Switch motion_1_alarm   "Alarm: [%s]"               <fire>        (gItem,gZwave,gSecurity) { zwave="4:command=sensor_alarm" }
+Number motion_1_lux     "Motion 1 lum [%.2f Lux]"   <lux>         (gItem,gZwave,gLum)      { zwave="4:command=sensor_multilevel,sensor_type=3" }
+Number motion_1_battery "Motion 1 battery [%d %%]"  <battery>     (gItem,gZwave,gBattery)  { zwave="4:command=battery" }
+Number motion_1_temp    "Motion 1 temp [%.1f C]"    <temperature> (gItem,gZwave,gTemp)     { zwave="4:command=sensor_multilevel,sensor_type=1" }

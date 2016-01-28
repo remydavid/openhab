@@ -1,0 +1,4 @@
+users.cfg
+openhab.cfg
+.*
+!/.gitignore

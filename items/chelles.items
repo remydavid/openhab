@@ -1,0 +1,17 @@
+Group	gAll
+Group	gSecurity
+Group gMobiles
+Group gPresence
+Group gNetwork
+
+// Security
+Switch	alarm "Alarme [%s]"	<shield> (gSecurity)
+Switch	siren "Sirene [%s]"	<siren> (gSecurity)
+
+// Presence
+Switch presence "Famille [MAP(presence.map):%s]" (gPresence)
+Switch remy_android "Remy [MAP(presence.map):%s]" (gPresence, gNetwork, gMobiles) {nh="android-8fa631b8854bc681"}
+Switch raquel_wp "Raquel [MAP(presence.map):%s]" (gPresence, gNetwork, gMobiles) {nh="Windows-Phone"}
+
+// Network
+Switch internet "Internet [MAP(connect.map):%s]" (gNetwork) {nh="www.google.com:80"}

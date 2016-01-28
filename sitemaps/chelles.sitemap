@@ -1,0 +1,37 @@
+sitemap chelles label="Sitemap de Chelles"
+{
+	Frame {
+		Text label="Sécurité" icon="shield"{
+			Switch item=alarm
+			Text item=siren
+			Text item=contact_entry_door
+			Text item=batt_contact_entry_door
+			Text item=motion_1_detect
+			Text item=motion_1_alarm
+			Text item=motion_1_battery
+		}
+	}
+	Frame {
+		Text label="Maison" icon="house"{
+			Frame label="Status"{
+				Text item=internet icon="computer" labelcolor=[OFF="red",ON="green"] valuecolor=[OFF="red",ON="green"]
+				Text item=motion_1_lux
+				Text item=motion_1_temp
+			}
+			Frame label="Commandes"{
+				Switch item=wall_plug
+				Text item=wall_plug_energy
+			}
+		}
+		Text label="Présence" icon="boy1" {
+			Frame {
+				Text item=presence icon="present" valuecolor=[ON="green"] visibility=[presence==ON]
+				Text item=presence icon="present-off" valuecolor=[OFF="grey"] visibility=[presence==OFF]
+			}
+			Frame{
+				Text item=remy_android icon="boy5" valuecolor=[OFF="grey",ON="green"] labelcolor=[OFF="grey",ON="dark"]
+				Text item=raquel_wp icon="boy3"	valuecolor=[OFF="grey",ON="green"] labelcolor=[OFF="grey",ON="dark"]
+			}
+		}
+	}
+}
