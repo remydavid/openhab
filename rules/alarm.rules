@@ -7,11 +7,13 @@ when
 then
 	if(alarm.state == ON){
 		logInfo(TAG, "Enabling alarm ");
+		pushover("Alarme ON",0,"https://my.openhab.org/openhab.app?sitemap=chelles#_0000","my.openHAB","siren");
 		//executeCommandLine("/opt/picotts/tts \"Alarme activée\" | aplay --rate=16000 --channels=1 --format=S16_LE");
 		//executeCommandLine("/home/pi/speech.sh Alarme activée");
 		//pushover("Alarme déclenchée à :" + new DateTime());
 	}else{
 		logInfo(TAG,"Disabling alarm");
+		pushover("Alarme OFF",0,"https://my.openhab.org/openhab.app?sitemap=chelles#_0000","my.openHAB","siren");
 		//executeCommandLine("/opt/picotts/tts \"Alarme désactivée\" | aplay --rate=16000 --channels=1 --format=S16_LE");
 		//executeCommandLine("/home/pi/speech.sh Alarme désactivée");
 	}
@@ -44,6 +46,7 @@ then
 				motion_1_detect.state == ON
 			)) {
   	logWarn(TAG, "Alarm triggered !!!")
+		pushover("ALERTE - Alarme déclenchée",2,"https://my.openhab.org/openhab.app?sitemap=chelles#_0000","my.openHAB","alien");
     sendCommand(siren,ON);
 // pushover("Alarme déclenchée à :" + new DateTime());
 // while(alarm.state == ON)

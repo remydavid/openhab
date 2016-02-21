@@ -8,14 +8,14 @@ when
 then
 	var Date now = new Date()
 
-	// si la conso tombe sous 25W pendant plus de 30s, coupe le switch
-    if (wall_plug.state == ON && wall_plug_energy.state <= 25 )
+	// si la conso tombe sous 28W pendant plus de 30s, coupe le switch
+    if (wall_plug.state == ON && wall_plug_energy.state <= 28 )
     {
     	if(!treshold){
     		tresholdSince = new Date()
     		treshold = true
     	}else if(now.getTime()-tresholdSince.getTime() > 30000){
-        	logInfo("HiFi switch", "HiFi consumption was below 25W for more than 30s, turn off switch." )
+        	logInfo("HiFi switch", "HiFi consumption was below 28W for more than 30s, turn off switch." )
     		sendCommand(wall_plug,OFF)
     	}
     }else{
